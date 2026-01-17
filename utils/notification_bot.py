@@ -210,6 +210,7 @@ class NotificationBot:
         if self.telegram_sender and telegram_messages:
             await self.telegram_sender.send_items(telegram_messages)
         if self.whatsapp_sender and whatsapp_messages:
+            logger.info("Attempting to send WhatsApp messages...")
             await self.whatsapp_sender.send_items(whatsapp_messages)
 
     async def _ticker_loop(self) -> None:

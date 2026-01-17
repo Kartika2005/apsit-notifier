@@ -15,6 +15,7 @@ class WhatsAppSender:
         self._recipient = recipient
 
     async def send_items(self, messages: list[str], spacing_seconds: float = 0.7):
+        logger.info(f"WhatsAppSender received {len(messages)} messages to send.")
         for message in messages:
             await self._send_one(message)
             await asyncio.sleep(spacing_seconds)

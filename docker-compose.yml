@@ -2,13 +2,27 @@ services:
   app:
     build: .
     container_name: apsit-notifier
+    depends_on:
+      - mongodb
     env_file:
       - .env
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017
     restart: unless-stopped
     volumes:
       - ./:/app  # drop :ro if you want live edits
       - app_venv:/app/.venv
     command: ["uv", "run", "--no-sync", "main.py"]
 
+  mongodb:
+    image: mongo:latest
+    container_name: apsit-notifier-mongo
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27018:27017"
+
 volumes:
   app_venv:
+  mongo_data:
